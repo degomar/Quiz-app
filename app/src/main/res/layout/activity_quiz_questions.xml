@@ -60,6 +60,7 @@
             />
 
         <TextView
+            android:id="@+id/tv_progress_bar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingTop="10dp"
@@ -86,10 +87,13 @@
     >
 
     <TextView
+        android:id="@+id/tv_question"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingTop="20dp"
         android:paddingBottom="20dp"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
         android:text="Question"
         android:textColor="@color/white"
         android:gravity="center"
@@ -100,19 +104,20 @@
 
 
     <ImageView
+        android:id="@+id/img_question"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_flag_of_argentina"
+        android:src="@drawable/default_img"
         android:layout_marginBottom="35dp"
         />
 
     <TextView
+        android:id="@+id/option1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:padding="10dp"
-        android:layout_marginTop="10dp"
         android:background="@drawable/design_default_btn"
         android:text="@string/submit"
         android:textColor="@color/white"
@@ -120,12 +125,13 @@
         android:textSize="20sp"
         android:layout_weight="1"/>
     <TextView
+        android:id="@+id/option2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="10dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/design_default_btn"
         android:text="@string/submit"
         android:textColor="@color/white"
@@ -133,12 +139,13 @@
         android:textSize="20sp"
         android:layout_weight="1"/>
     <TextView
+        android:id="@+id/option3"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="10dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/design_default_btn"
         android:text="@string/submit"
         android:textColor="@color/white"
@@ -146,12 +153,13 @@
         android:textSize="20sp"
         android:layout_weight="1"/>
     <TextView
+        android:id="@+id/option4"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="10dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:layout_marginBottom="30dp"
         android:background="@drawable/design_default_btn"
         android:text="@string/submit"
@@ -162,6 +170,7 @@
 </LinearLayout>
 
     <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_submit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
