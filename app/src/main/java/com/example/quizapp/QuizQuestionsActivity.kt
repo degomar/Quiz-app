@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.View
 import android.view.View.OnClickListener
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.viewmodel.CreationExtras
@@ -18,6 +19,7 @@ class QuizQuestionsActivity : AppCompatActivity(), OnClickListener {
     lateinit var binding : ActivityQuizQuestionsBinding
     lateinit var questionList: ArrayList<Question>
     var currentPosition: Int = 1
+    var mySelectedPosition : Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,11 +32,12 @@ class QuizQuestionsActivity : AppCompatActivity(), OnClickListener {
         binding.option2.setOnClickListener(this)
         binding.option3.setOnClickListener(this)
         binding.option4.setOnClickListener(this)
+        binding.btnSubmit.setOnClickListener(this)
 
     }
 
     private fun setQuestion() {
-
+        defaultOptionView()
         var question: Question = questionList[currentPosition - 1]
         binding.progressbar.progress = currentPosition!!
         binding.tvProgressBar.text = "Pergunta ${currentPosition}/${binding.progressbar.max}"
@@ -65,7 +68,7 @@ class QuizQuestionsActivity : AppCompatActivity(), OnClickListener {
 
     private fun selectedOptionView(tv: TextView, selectedOptionNumber: Int){
         defaultOptionView()
-        currentPosition = selectedOptionNumber
+        mySelectedPosition = selectedOptionNumber
 
         tv.setTextColor(Color.parseColor("#FFFFFF"))
         tv.setTypeface(tv.typeface, Typeface.BOLD)
@@ -97,7 +100,46 @@ class QuizQuestionsActivity : AppCompatActivity(), OnClickListener {
                     selectedOptionView(it,4)
                 }
             }
-            binding.btnSubmit.id -> {}
+            binding.btnSubmit.id -> {
+                if ( mySelectedPosition == 0){
+                    currentPosition++
+                when{
+                    currentPosition <= questionList.size -> {
+                        setQuestion()
+                    }
+                    else -> {
+                        Toast.makeText(this,
+                            "Parabéns você encerrou o quiz", Toast.LENGTH_LONG).show()
+                    }
+                }
+            } else {
+                    var question = questionList.get(currentPosition - 1)
+                    if (question.correctAnswer != mySelectedPosition) {
+                        answerView(mySelectedPosition, R.drawable.design_wrong_answer_btn)
+                    }
+                    answerView(question.correctAnswer, R.drawable.design_correct_answer_btn)
+                    if (currentPosition == questionList.size) {
+                        binding.btnSubmit.text = "Finalizar"
+
+                    } else {
+                        binding.btnSubmit.text = "ir para próxima pergunta"
+                    }
+                    mySelectedPosition = 0
+            }
+
+
+            }
+
+        }
+    }
+
+    private fun answerView(answer: Int, drawableView: Int){
+
+        when(answer) {
+            1 -> binding.option1.background = ContextCompat.getDrawable(this,drawableView)
+            2 -> binding.option2.background = ContextCompat.getDrawable(this,drawableView)
+            3 -> binding.option3.background = ContextCompat.getDrawable(this,drawableView)
+            4 -> binding.option4.background = ContextCompat.getDrawable(this,drawableView)
         }
     }
 }
