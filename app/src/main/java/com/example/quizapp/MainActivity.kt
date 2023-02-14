@@ -3,6 +3,7 @@ package com.example.quizapp
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -20,6 +21,8 @@ class MainActivity : AppCompatActivity() {
                Toast.makeText(this, "Ops digite um nome para começar", Toast.LENGTH_LONG).show()
             } else {
                 var intent = Intent(this, QuizQuestionsActivity::class.java)
+                var user = binding.etName.text.toString()
+                intent.putExtra(Constants.USER_NAME, user)
                 startActivity(intent)
                 finish()
             }

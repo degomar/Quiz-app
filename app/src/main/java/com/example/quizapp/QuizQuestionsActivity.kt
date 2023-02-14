@@ -1,5 +1,6 @@
 package com.example.quizapp
 
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
@@ -20,6 +21,8 @@ class QuizQuestionsActivity : AppCompatActivity(), OnClickListener {
     lateinit var questionList: ArrayList<Question>
     var currentPosition: Int = 1
     var mySelectedPosition : Int = 0
+    var myCorrectAnswer : Int = 0
+    var myUserName : String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,10 +37,12 @@ class QuizQuestionsActivity : AppCompatActivity(), OnClickListener {
         binding.option4.setOnClickListener(this)
         binding.btnSubmit.setOnClickListener(this)
 
+        myUserName = intent.getStringExtra(Constants.USER_NAME)
     }
 
     private fun setQuestion() {
         defaultOptionView()
+        binding.btnSubmit.text = "Submit"
         var question: Question = questionList[currentPosition - 1]
         binding.progressbar.progress = currentPosition!!
         binding.tvProgressBar.text = "Pergunta ${currentPosition}/${binding.progressbar.max}"
@@ -108,14 +113,22 @@ class QuizQuestionsActivity : AppCompatActivity(), OnClickListener {
                         setQuestion()
                     }
                     else -> {
-                        Toast.makeText(this,
-                            "Parabéns você encerrou o quiz", Toast.LENGTH_LONG).show()
+
+                        var intent = Intent(this, CongratsActivity::class.java)
+                        intent.putExtra(Constants.CORRECT_ANSWERS, myCorrectAnswer)
+                        intent.putExtra(Constants.TOTAL_QUESTIONS, questionList.size)
+                        intent.putExtra(Constants.USER_NAME, myUserName)
+                        startActivity(intent)
+                        finish()
                     }
                 }
             } else {
                     var question = questionList.get(currentPosition - 1)
                     if (question.correctAnswer != mySelectedPosition) {
                         answerView(mySelectedPosition, R.drawable.design_wrong_answer_btn)
+                    }
+                    else{
+                        myCorrectAnswer++
                     }
                     answerView(question.correctAnswer, R.drawable.design_correct_answer_btn)
                     if (currentPosition == questionList.size) {
